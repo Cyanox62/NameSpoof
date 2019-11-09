@@ -25,7 +25,7 @@ namespace NameSpoof
 
 		public void OnCallCommand(PlayerCallCommandEvent ev)
 		{
-			if (((GameObject)ev.Player.GetGameObject()).GetComponent<ServerRoles>().RemoteAdmin)
+			if (((GameObject)ev.Player.GetGameObject()).GetComponent<ServerRoles>().RemoteAdmin && ev.Command.StartsWith("spoof"))
 			{
 				string name = ev.Command.Replace("spoof", "").Trim();
 				if (name.Length > 0)
