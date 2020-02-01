@@ -1,37 +1,41 @@
-﻿using Smod2.API;
-using UnityEngine;
-
-namespace NameSpoof
+﻿namespace NameSpoof
 {
-	partial class EventHandler
+	partial class EventHandlers
 	{
-		public static void SpoofName(Player player, PlayerSpoof playerSpoof)
+		class PlayerSpoof
 		{
-			if (!spoofs.ContainsKey(player.SteamId))
+			public string pNormalName;
+			public string pSpoofedName;
+		}
+
+		private void SpoofName(ReferenceHub player, PlayerSpoof playerSpoof)
+		{
+			if (!spoofs.ContainsKey(player.characterClassManager.UserId))
 			{
-				spoofs.Add(player.SteamId, playerSpoof);
+				spoofs.Add(player.characterClassManager.UserId, playerSpoof);
 			}
 			else
 			{
-				spoofs[player.SteamId].pSpoofedName = playerSpoof.pSpoofedName;
+				spoofs[player.characterClassManager.UserId].pSpoofedName = playerSpoof.pSpoofedName;
 			}
 			SetNickname(player, playerSpoof.pSpoofedName);
 		}
 
-		public static void UnSpoofName(Player player)
+		private void UnSpoofName(ReferenceHub player)
 		{
-			if (spoofs.ContainsKey(player.SteamId))
+			if (spoofs.ContainsKey(player.characterClassManager.UserId))
 			{
-				SetNickname(player, spoofs[player.SteamId].pNormalName);
-				spoofs.Remove(player.SteamId);
+				SetNickname(player, spoofs[player.characterClassManager.UserId].pNormalName);
+				spoofs.Remove(player.characterClassManager.UserId);
 			}
 		}
 
-		private static void SetNickname(Player player, string name)
+		private void SetNickname(ReferenceHub player, string name)
 		{
-			GameObject obj = (GameObject)player.GetGameObject();
-			obj.GetComponent<ServerRoles>().SetBadgeUpdate(name);
-			obj.GetComponent<NicknameSync>().UpdateNickname(name);
+			Plugin.Info("spoofing to " + name);
+			//player.serverRoles.NetworkGlobalBadge = name;
+			player.nicknameSync.MyNick = name;
+			player.nicknameSync.Network_myNickSync = name;
 		}
 	}
 }
