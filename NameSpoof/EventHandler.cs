@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using Exiled.API.Features;
 using Exiled.Events.EventArgs;
 using Mirror;
@@ -29,13 +30,14 @@ namespace NameSpoof
 					string name = string.Empty;
 					foreach (string s in ev.Arguments) name += $"{s} ";
 					name = name.Trim();
-					if (!spoofs.ContainsKey(ev.Player.UserId)) spoofs.Add(ev.Player.UserId, name);
-					else spoofs[ev.Player.UserId] = name;
+					string path = $"{Path.Combine(NameSpoof.SavesFilePath, ev.Player.UserId)}.txt";
+					File.WriteAllText(path, name);
 					ev.ReturnMessage = $"Your name has been spoofed to '{name}'. You must reconnect for the name change to take effect. Type '.relog' to reconnect now.";
 				}
 				else
 				{
-					spoofs.Remove(ev.Player.UserId);
+					string path = $"{Path.Combine(NameSpoof.SavesFilePath, ev.Player.UserId)}.txt";
+					if (File.Exists(path)) File.Delete(path);
 					ev.ReturnMessage = "Your name has been unspoofed. You must reconnect for the name change to take effect. Type '.relog' to reconnect now.";
 				}
 			}

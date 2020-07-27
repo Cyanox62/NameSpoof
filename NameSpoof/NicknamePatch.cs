@@ -1,8 +1,5 @@
-﻿using Exiled.API.Features;
-using HarmonyLib;
-using Mirror;
-using System;
-using UnityEngine;
+﻿using HarmonyLib;
+using System.IO;
 
 namespace NameSpoof
 {
@@ -12,7 +9,8 @@ namespace NameSpoof
 		public static void Prefix(NicknameSync __instance, ref string nick)
 		{
 			string userid = __instance.gameObject.GetComponent<CharacterClassManager>().UserId;
-			if (EventHandler.spoofs.ContainsKey(userid)) nick = EventHandler.spoofs[userid];
+			string path = $"{Path.Combine(NameSpoof.SavesFilePath, userid)}.txt";
+			if (File.Exists(path)) nick = File.ReadAllText(path);
 		}
 	}
 }
