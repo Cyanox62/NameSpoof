@@ -30,27 +30,31 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="0Harmony">
-      <HintPath>..\..\..\..\Desktop\References\0Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="0Harmony, Version=1.2.0.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Desktop\References\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\AppData\Roaming\EXILED\Plugins\dependencies\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Desktop\References\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\scpsls\SCPSL_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
-    <Reference Include="EXILED">
-      <HintPath>..\..\..\..\Desktop\References\EXILED.dll</HintPath>
+    <Reference Include="Assembly-CSharp_publicized">
+      <HintPath>..\..\..\..\Desktop\publicized_assemblies\Assembly-CSharp_publicized.dll</HintPath>
     </Reference>
-    <Reference Include="EXILED_Events">
-      <HintPath>..\..\..\..\AppData\Roaming\Plugins\EXILED_Events.dll</HintPath>
+    <Reference Include="Exiled.API">
+      <HintPath>..\..\..\..\AppData\Roaming\EXILED\Plugins\dependencies\Exiled.API.dll</HintPath>
     </Reference>
-    <Reference Include="Mirror">
-      <HintPath>..\..\..\..\Desktop\References\Mirror.dll</HintPath>
+    <Reference Include="Exiled.Events">
+      <HintPath>..\..\..\..\AppData\Roaming\EXILED\Plugins\Exiled.Events.dll</HintPath>
+    </Reference>
+    <Reference Include="Exiled.Loader">
+      <HintPath>..\..\..\..\AppData\Roaming\EXILED\Exiled.Loader.dll</HintPath>
+    </Reference>
+    <Reference Include="Mirror_publicized">
+      <HintPath>..\..\EXILEDPluginTemplate\EXILEDPluginTemplate\bin\Debug\publicized_assemblies\Mirror_publicized.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -71,9 +75,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventHandlers.cs" />
-    <Compile Include="Logic.cs" />
-    <Compile Include="Plugin.cs" />
+    <Compile Include="Config.cs" />
+    <Compile Include="EventHandler.cs" />
+    <Compile Include="NameSpoof.cs" />
+    <Compile Include="NicknamePatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
