@@ -11,14 +11,14 @@ namespace NameSpoof.Commands
 	{
 		public string[] Aliases { get; set; } = Array.Empty<string>();
 
-		public string Description { get; set; } = "Spoofs your name";
+		public string Description { get; set; } = "Relogs your client";
 
-		string ICommand.Command { get; } = "spoof";
+		string ICommand.Command { get; } = "relog";
 
 		private void TargetRpcRedirect(Player player, ushort port)
 		{
 			NetworkBehaviour behaviour = player.ReferenceHub.playerStats;
-			NetworkWriter writer = NetworkWriterPool.GetWriter();
+			PooledNetworkWriter writer = NetworkWriterPool.GetWriter();
 			writer.WriteSingle(1f);
 			writer.WriteUInt16(port);
 			behaviour.SendTargetRPCInternal(behaviour.connectionToClient, typeof(PlayerStats), "RpcRoundrestartRedirect", writer, 0);
