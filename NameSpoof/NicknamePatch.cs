@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using System.IO;
 
 namespace NameSpoof
 {
@@ -8,9 +7,11 @@ namespace NameSpoof
 	{
 		public static void Prefix(NicknameSync __instance, ref string nick)
 		{
-			string userid = __instance.gameObject.GetComponent<CharacterClassManager>().UserId;
-			string path = $"{Path.Combine(NameSpoof.SavesFilePath, userid)}.txt";
-			if (File.Exists(path)) nick = File.ReadAllText(path);
+			if (__instance?._hub?.characterClassManager?.UserId != null &&
+				NameSpoof.spoofs.ContainsKey(__instance._hub.characterClassManager.UserId))
+			{
+				nick = NameSpoof.spoofs[__instance._hub.characterClassManager.UserId];
+			}
 		}
 	}
 }

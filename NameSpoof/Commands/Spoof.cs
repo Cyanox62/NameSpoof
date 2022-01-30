@@ -2,11 +2,6 @@
 using Exiled.API.Features;
 using RemoteAdmin;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NameSpoof.Commands
 {
@@ -31,14 +26,27 @@ namespace NameSpoof.Commands
 						string name = string.Empty;
 						foreach (string s in arguments) name += $"{s} ";
 						name = name.Trim();
-						File.WriteAllText($"{Path.Combine(NameSpoof.SavesFilePath, player.UserId)}.txt", name);
+						if (!NameSpoof.spoofs.ContainsKey(player.UserId))
+						{
+							NameSpoof.spoofs.Add(player.UserId, name);
+						}
+						else
+						{
+							NameSpoof.spoofs[player.UserId] = name;
+						}
 						response = $"Your name has been spoofed to '{name}'. You must reconnect for the name change to take effect. Type '.relog' to reconnect now.";
 					}
 					else
 					{
-						string path = $"{Path.Combine(NameSpoof.SavesFilePath, player.UserId)}.txt";
-						if (File.Exists(path)) File.Delete(path);
-						response = "Your name has been unspoofed. You must reconnect for the name change to take effect. Type '.relog' to reconnect now.";
+						if (NameSpoof.spoofs.ContainsKey(player.UserId))
+						{
+							NameSpoof.spoofs.Remove(player.UserId);
+							response = "Your name has been unspoofed. You must reconnect for the name change to take effect. Type '.relog' to reconnect now.";
+						}
+						else
+						{
+							response = "Your name is not currently spoofed.";
+						}
 					}
 					return true;
 				}
